@@ -11,6 +11,7 @@ import authRoutes from './routes/authRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import publicRoutes from './routes/publicRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -56,6 +57,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/wholesale', wholesaleRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/public', publicRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -11,6 +11,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [overview, setOverview] = useState({ reviews: [], promotions: [], contacts: [], coupons: [], categories: [] });
   const [imageFile, setImageFile] = useState(null);
   const [productForm, setProductForm] = useState({
     name: '',
@@ -33,13 +34,15 @@ export default function AdminDashboard() {
       api.get('/orders/admin/all'),
       api.get('/users/admin/all'),
       api.get('/products/admin/all'),
-      api.get('/wholesale/admin/all')
-    ]).then(([statsRes, ordersRes, usersRes, productsRes, appsRes]) => {
+      api.get('/wholesale/admin/all'),
+      api.get('/admin/overview')
+    ]).then(([statsRes, ordersRes, usersRes, productsRes, appsRes, overviewRes]) => {
       setStats(statsRes.data);
       setOrders(ordersRes.data);
       setUsers(usersRes.data);
       setProducts(productsRes.data);
       setApplications(appsRes.data);
+      setOverview(overviewRes.data);
     });
   }, []);
 
@@ -99,6 +102,19 @@ export default function AdminDashboard() {
         <Metric icon={<FiBox />} label="Products" value={stats?.products || 0} />
         <Metric icon={<FiUsers />} label="Users" value={stats?.users || 0} />
         <Metric icon={<MdWarehouse />} label="Revenue" value={`LKR ${(stats?.revenue || 0).toLocaleString()}`} />
+      </div>
+
+      <div className="mb-8 grid gap-4 md:grid-cols-2">
+        <div className="panel">
+          <h2 className="font-black">Low stock alerts</h2>
+          {(stats?.lowStock || []).map((product) => <p className="mt-2 text-sm" key={product._id}>{product.name} needs restock</p>)}
+          {!stats?.lowStock?.length && <p className="text-sm text-stone-500">No low stock alerts.</p>}
+        </div>
+        <div className="panel">
+          <h2 className="font-black">Out of stock alerts</h2>
+          {(stats?.outOfStock || []).map((product) => <p className="mt-2 text-sm" key={product._id}>{product.name} is out of stock</p>)}
+          {!stats?.outOfStock?.length && <p className="text-sm text-stone-500">No out of stock alerts.</p>}
+        </div>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -165,6 +181,21 @@ export default function AdminDashboard() {
             <tbody>{applications.map((app) => <tr key={app._id} className="border-b"><td className="py-2">{app.businessName}</td><td>{app.email}</td><td>{app.status}</td></tr>)}</tbody>
           </table>
         </div>
+        {[
+          ['Categories', overview.categories, (item) => item.name],
+          ['Reviews', overview.reviews, (item) => `${item.rating} stars - ${item.title}`],
+          ['Promotions', overview.promotions, (item) => `${item.type}: ${item.title}`],
+          ['Contact Messages', overview.contacts, (item) => `${item.subject} - ${item.status}`],
+          ['Coupons', overview.coupons, (item) => `${item.code} - ${item.type}`]
+        ].map(([title, list, render]) => (
+          <div className="panel" key={title}>
+            <h2 className="mb-3 font-black">Manage {title}</h2>
+            <div className="space-y-2 text-sm">
+              {list?.slice(0, 8).map((item) => <p className="rounded-md bg-white p-2" key={item._id}>{render(item)}</p>)}
+              {!list?.length && <p className="text-stone-500">No records yet.</p>}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

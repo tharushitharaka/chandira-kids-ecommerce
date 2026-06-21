@@ -52,11 +52,12 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => setItems([]);
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shippingEstimate = subtotal > 15000 || subtotal === 0 ? 0 : 650;
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const value = useMemo(
-    () => ({ items, addItem, updateQty, removeItem, clearCart, subtotal, count }),
-    [items, subtotal, count]
+    () => ({ items, addItem, updateQty, removeItem, clearCart, subtotal, shippingEstimate, count }),
+    [items, subtotal, shippingEstimate, count]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

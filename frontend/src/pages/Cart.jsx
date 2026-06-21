@@ -1,11 +1,14 @@
 import { FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { mediaUrl } from '../utils/media';
 
 export default function Cart() {
-  const { items, subtotal, updateQty, removeItem } = useCart();
+  const { items, subtotal, shippingEstimate, updateQty, removeItem } = useCart();
+  const [coupon, setCoupon] = useState('');
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-10">
@@ -26,7 +29,11 @@ export default function Cart() {
         ))}
       </div>
       <div className="mt-6 panel ml-auto max-w-sm space-y-3">
+        <input placeholder="Coupon code" value={coupon} onChange={(e) => setCoupon(e.target.value)} />
+        <button className="btn-secondary w-full" onClick={() => toast.success(coupon ? 'Coupon will be applied at checkout' : 'Enter a coupon code')}>Apply coupon</button>
         <div className="flex justify-between"><span>Subtotal</span><strong>LKR {subtotal.toLocaleString()}</strong></div>
+        <div className="flex justify-between"><span>Shipping estimate</span><strong>{shippingEstimate ? `LKR ${shippingEstimate.toLocaleString()}` : 'Free'}</strong></div>
+        <div className="flex justify-between border-t pt-3 text-lg"><span>Order summary</span><strong>LKR {(subtotal + shippingEstimate).toLocaleString()}</strong></div>
         <Link className="btn-primary w-full" to="/checkout">Checkout</Link>
       </div>
     </section>

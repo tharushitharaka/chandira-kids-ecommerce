@@ -1,8 +1,52 @@
 import express from 'express';
+import Address from '../models/Address.js';
+import Notification from '../models/Notification.js';
 import User from '../models/User.js';
 import { authorize, protect } from '../middleware/auth.js';
 
 const router = express.Router();
+
+router.get('/profile', protect, (req, res) => {
+  res.json(req.user);
+});
+
+router.put('/profile', protect, async (req, res, next) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name: req.body.name, phone: req.body.phone },
+      { new: true, runValidators: true }
+    ).select('-password');
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/addresses', protect, async (req, res, next) => {
+  try {
+    res.json(await Address.find({ user: req.user._id }).sort('-isDefault -createdAt'));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/addresses', protect, async (req, res, next) => {
+  try {
+    const address = await Address.create({ ...req.body, user: req.user._id });
+    res.status(201).json(address);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/notifications', protect, async (req, res, next) => {
+  try {
+    res.json(await Notification.find({ user: req.user._id }).sort('-createdAt'));
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get('/wishlist', protect, async (req, res, next) => {
   try {

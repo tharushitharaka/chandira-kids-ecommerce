@@ -10,6 +10,7 @@ const buildProductFilter = (query, admin = false) => {
   if (query.category) filter.category = query.category;
   if (query.ageCategory) filter.ageCategory = query.ageCategory;
   if (query.ageRange) filter.ageRange = query.ageRange;
+  if (query.priceType === 'wholesale') filter.wholesalePrice = { $exists: true };
   if (query.featured) filter.featured = query.featured === 'true';
   if (query.minPrice || query.maxPrice) {
     filter.price = {};
@@ -26,6 +27,8 @@ router.get('/', async (req, res, next) => {
     const limit = Math.min(Number(req.query.limit || 12), 48);
     const sortMap = {
       newest: '-createdAt',
+      popular: '-viewCount',
+      popularity: '-viewCount',
       price_asc: 'price',
       price_desc: '-price',
       rating: '-averageRating'
@@ -52,6 +55,19 @@ router.get('/featured/list', async (req, res, next) => {
   }
 });
 
+router.get('/suggestions/list', async (req, res, next) => {
+  try {
+    const search = req.query.search || '';
+    const products = await Product.find({
+      isPublished: true,
+      ...(search ? { name: { $regex: search, $options: 'i' } } : {})
+    }).select('name slug code images price').limit(8);
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/admin/all', protect, authorize('admin'), async (req, res, next) => {
   try {
     const products = await Product.find(buildProductFilter(req.query, true)).sort('-createdAt');
@@ -68,10 +84,15 @@ router.get('/:slug', async (req, res, next) => {
       res.status(404);
       throw new Error('Product not found');
     }
-    const reviews = await Review.find({ product: product._id, isApproved: true })
+    product.viewCount += 1;
+    await product.save();
+    const [reviews, relatedProducts] = await Promise.all([
+      Review.find({ product: product._id, isApproved: true })
       .populate('user', 'name')
-      .sort('-createdAt');
-    res.json({ product, reviews });
+      .sort('-createdAt'),
+      Product.find({ _id: { $ne: product._id }, category: product.category, isPublished: true }).limit(4)
+    ]);
+    res.json({ product, reviews, relatedProducts });
   } catch (error) {
     next(error);
   }

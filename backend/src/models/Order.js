@@ -21,6 +21,7 @@ const addressSchema = new mongoose.Schema(
     line1: { type: String, required: true },
     line2: String,
     city: { type: String, required: true },
+    district: String,
     state: String,
     postalCode: String,
     country: { type: String, default: 'Sri Lanka' },
@@ -42,7 +43,8 @@ const orderSchema = new mongoose.Schema(
     total: { type: Number, required: true },
     currency: { type: String, default: 'LKR' },
     couponCode: String,
-    paymentMethod: { type: String, enum: ['cod', 'bank_transfer', 'card'], default: 'cod' },
+    paymentMethod: { type: String, enum: ['cod', 'bank_transfer', 'card', 'stripe', 'paypal'], default: 'cod' },
+    paymentReference: String,
     paymentStatus: { type: String, enum: ['pending', 'paid', 'failed', 'refunded'], default: 'pending' },
     status: {
       type: String,

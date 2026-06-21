@@ -35,6 +35,7 @@ const ageCategories = [
 
 const productSchema = new mongoose.Schema(
   {
+    code: { type: String, unique: true, index: true },
     name: { type: String, required: true, trim: true },
     slug: { type: String, unique: true, index: true },
     description: { type: String, required: true },
@@ -49,6 +50,12 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true, min: 0 },
     wholesalePrice: { type: Number, required: true, min: 0 },
     wholesaleMinQty: { type: Number, default: 6 },
+    wholesaleTiers: [
+      {
+        minQty: { type: Number, required: true },
+        price: { type: Number, required: true }
+      }
+    ],
     costPrice: { type: Number, min: 0 },
     variants: [variantSchema],
     tags: [String],
@@ -57,14 +64,20 @@ const productSchema = new mongoose.Schema(
     seoTitle: String,
     seoDescription: String,
     averageRating: { type: Number, default: 0 },
-    reviewCount: { type: Number, default: 0 }
+    reviewCount: { type: Number, default: 0 },
+    viewCount: { type: Number, default: 0 }
   },
   { timestamps: true }
 );
 
-productSchema.pre('validate', function makeSlug(next) {
+productSchema.pre('validate', async function makeSlugAndCode(next) {
   if (!this.slug && this.name) {
     this.slug = slugify(this.name, { lower: true, strict: true });
+  }
+  if (!this.code) {
+    const latest = await mongoose.model('Product').findOne({ code: /^CK\d+$/ }).sort('-createdAt').select('code');
+    const nextNumber = latest?.code ? Number(latest.code.replace('CK', '')) + 1 : 1;
+    this.code = `CK${String(nextNumber).padStart(3, '0')}`;
   }
   next();
 });

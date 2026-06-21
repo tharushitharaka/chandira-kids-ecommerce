@@ -2,7 +2,7 @@ import express from 'express';
 import User from '../models/User.js';
 import WholesaleApplication from '../models/WholesaleApplication.js';
 import { authorize, optionalAuth, protect } from '../middleware/auth.js';
-import { sendEmail } from '../utils/email.js';
+import { sendEmail, wholesaleApprovalTemplate } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -40,7 +40,8 @@ router.put('/admin/:id', protect, authorize('admin'), async (req, res, next) => 
       { new: true }
     );
     if (application?.status === 'approved' && application.user) {
-      await User.findByIdAndUpdate(application.user, { role: 'wholesale' });
+      const user = await User.findByIdAndUpdate(application.user, { role: 'wholesale' }, { new: true });
+      await sendEmail({ to: user.email, subject: 'Chandira Kids wholesale account approved', html: wholesaleApprovalTemplate(user) });
     }
     res.json(application);
   } catch (error) {

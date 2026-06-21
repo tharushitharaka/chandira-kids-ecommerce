@@ -4,6 +4,7 @@ import Order from '../models/Order.js';
 import Product from '../models/Product.js';
 import { authorize, optionalAuth, protect } from '../middleware/auth.js';
 import { orderConfirmationTemplate, sendEmail } from '../utils/email.js';
+import { createPaymentIntent } from '../services/paymentMethods.js';
 
 const router = express.Router();
 
@@ -98,6 +99,10 @@ router.post('/', optionalAuth, async (req, res, next) => {
       notes
     });
 
+    const paymentIntent = await createPaymentIntent(paymentMethod, order);
+    order.paymentReference = paymentIntent.reference;
+    await order.save();
+
     if (coupon) {
       coupon.usedCount += 1;
       await coupon.save();
@@ -109,7 +114,7 @@ router.post('/', optionalAuth, async (req, res, next) => {
       html: orderConfirmationTemplate(order)
     });
 
-    res.status(201).json(order);
+    res.status(201).json({ order, paymentIntent });
   } catch (error) {
     next(error);
   }
@@ -141,6 +146,19 @@ router.put('/:id/status', protect, authorize('admin'), async (req, res, next) =>
       throw new Error('Order not found');
     }
     res.json(order);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/track/:orderNumber', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({ orderNumber: req.params.orderNumber });
+    if (!order) {
+      res.status(404);
+      throw new Error('Order not found');
+    }
+    res.json({ orderNumber: order.orderNumber, status: order.status, paymentStatus: order.paymentStatus, updatedAt: order.updatedAt });
   } catch (error) {
     next(error);
   }

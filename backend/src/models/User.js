@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema(
       }
     ],
     wishlist: [wishlistItemSchema],
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     isActive: { type: Boolean, default: true }
   },
   { timestamps: true }

@@ -28,7 +28,10 @@ export default function Login() {
         <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
         <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
         <button className="btn-primary">Login</button>
-        <Link className="text-sm font-bold text-mulberry" to="/register">Create an account</Link>
+        <div className="flex justify-between text-sm font-bold text-mulberry">
+          <Link to="/register">Create an account</Link>
+          <Link to="/forgot-password">Forgot password?</Link>
+        </div>
       </form>
     </section>
   );

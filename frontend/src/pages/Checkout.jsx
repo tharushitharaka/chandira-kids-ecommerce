@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import SEO from '../components/SEO';
@@ -10,8 +10,13 @@ export default function Checkout() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [couponCode, setCouponCode] = useState('');
-  const [form, setForm] = useState({ fullName: '', line1: '', line2: '', city: '', state: '', postalCode: '', country: 'Sri Lanka', phone: '', email: user?.email || '' });
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [form, setForm] = useState({ fullName: '', line1: '', line2: '', city: '', state: '', district: '', postalCode: '', country: 'Sri Lanka', phone: '', email: user?.email || '', notes: '', paymentMethod: 'cod' });
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    api.get('/public/payment-methods').then(({ data }) => setPaymentMethods(data));
+  }, []);
 
   const submit = async (event) => {
     event.preventDefault();
@@ -20,11 +25,12 @@ export default function Checkout() {
       shippingAddress: form,
       guestEmail: form.email,
       couponCode,
-      paymentMethod: 'cod'
+      paymentMethod: form.paymentMethod,
+      notes: form.notes
     };
     const { data } = await api.post('/orders', payload);
     clearCart();
-    setMessage(`Order ${data.orderNumber} placed successfully.`);
+    setMessage(`Order ${data.order.orderNumber} placed successfully.`);
     setTimeout(() => navigate('/shop'), 1600);
   };
 
@@ -38,13 +44,17 @@ export default function Checkout() {
           <input placeholder="Full name" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} required />
           <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           <input placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
-          <input placeholder="Address line 1" value={form.line1} onChange={(e) => setForm({ ...form, line1: e.target.value })} required />
+          <input placeholder="Address" value={form.line1} onChange={(e) => setForm({ ...form, line1: e.target.value })} required />
           <input placeholder="Address line 2" value={form.line2} onChange={(e) => setForm({ ...form, line2: e.target.value })} />
           <div className="grid gap-3 md:grid-cols-3">
             <input placeholder="City" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} required />
-            <input placeholder="State" value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} />
+            <input placeholder="District" value={form.district} onChange={(e) => setForm({ ...form, district: e.target.value })} required />
             <input placeholder="Postal code" value={form.postalCode} onChange={(e) => setForm({ ...form, postalCode: e.target.value })} />
           </div>
+          <textarea placeholder="Order notes" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+          <select value={form.paymentMethod} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })}>
+            {paymentMethods.map((method) => <option key={method.id} value={method.id}>{method.label}</option>)}
+          </select>
         </div>
         <aside className="panel h-fit space-y-3">
           <h2 className="font-black">Order summary</h2>

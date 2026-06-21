@@ -29,4 +29,12 @@ router.post('/admin', protect, authorize('admin'), async (req, res, next) => {
   }
 });
 
+router.put('/admin/:id', protect, authorize('admin'), async (req, res, next) => {
+  try {
+    res.json(await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }));
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

@@ -3,7 +3,7 @@ import api from '../api/client';
 import SEO from '../components/SEO';
 
 export default function Wholesale() {
-  const [form, setForm] = useState({ businessName: '', ownerName: '', email: '', phone: '', businessType: '', monthlyVolume: '', websiteOrSocial: '', message: '' });
+  const [form, setForm] = useState({ businessName: '', ownerName: '', email: '', phone: '', businessType: '', address: '', monthlyVolume: '', websiteOrSocial: '', message: '' });
   const [sent, setSent] = useState(false);
 
   const submit = async (event) => {
@@ -28,6 +28,7 @@ export default function Wholesale() {
           <input placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
         </div>
         <input placeholder="Business type" value={form.businessType} onChange={(e) => setForm({ ...form, businessType: e.target.value })} required />
+        <input placeholder="Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} required />
         <input placeholder="Expected monthly volume" value={form.monthlyVolume} onChange={(e) => setForm({ ...form, monthlyVolume: e.target.value })} />
         <input placeholder="Website or social page" value={form.websiteOrSocial} onChange={(e) => setForm({ ...form, websiteOrSocial: e.target.value })} />
         <textarea placeholder="Tell us about your shop" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />

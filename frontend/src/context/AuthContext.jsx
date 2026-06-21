@@ -31,7 +31,12 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const value = useMemo(() => ({ user, login, register, logout, isAdmin: user?.role === 'admin' }), [user]);
+  const refreshProfile = async () => {
+    const { data } = await api.get('/auth/me');
+    setUser(data.user);
+  };
+
+  const value = useMemo(() => ({ user, login, register, logout, refreshProfile, isAdmin: user?.role === 'admin', isWholesale: user?.role === 'wholesale' }), [user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
