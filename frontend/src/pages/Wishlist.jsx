@@ -11,10 +11,14 @@ export default function Wishlist() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10">
+    <section className="page-shell">
       <SEO title="Wishlist | Chandira Kids" />
-      <h1 className="mb-6 text-3xl font-black">Wishlist</h1>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="page-hero">
+        <p className="badge-tag">Saved items</p>
+        <h1 className="mt-2 text-3xl font-black text-[#171717]">Wishlist</h1>
+        <p className="mt-2 muted-text">Keep track of your favourite styles for later.</p>
+      </div>
+      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => <ProductCard key={product._id} product={product} />)}
       </div>
     </section>

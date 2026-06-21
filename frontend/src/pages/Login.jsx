@@ -20,19 +20,26 @@ export default function Login() {
   };
 
   return (
-    <section className="mx-auto max-w-md px-4 py-12">
+    <section className="page-shell max-w-6xl">
       <SEO title="Login | Chandira Kids" />
-      <form className="panel grid gap-4" onSubmit={submit}>
-        <h1 className="text-2xl font-black">Login</h1>
-        {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>}
-        <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-        <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
-        <button className="btn-primary">Login</button>
-        <div className="flex justify-between text-sm font-bold text-mulberry">
-          <Link to="/register">Create an account</Link>
-          <Link to="/forgot-password">Forgot password?</Link>
+      <div className="grid overflow-hidden rounded-[32px] bg-white shadow-sm ring-1 ring-[#ece3cf] lg:grid-cols-[1fr_0.9fr]">
+        <div className="hidden bg-gradient-to-br from-[#1f1f1f] via-[#3a2d1e] to-[#c9a56d] p-8 text-white lg:flex lg:flex-col lg:justify-end">
+          <p className="badge-tag bg-white/10 text-white">Welcome back</p>
+          <h2 className="mt-3 text-3xl font-black">Style starts here</h2>
+          <p className="mt-3 max-w-sm text-white/80">Sign in to track orders, save favourites, and continue shopping.</p>
         </div>
-      </form>
+        <form className="grid gap-4 p-8" onSubmit={submit}>
+          <h1 className="text-3xl font-black text-[#171717]">Login</h1>
+          {error && <p className="rounded-2xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+          <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+          <input type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
+          <button className="btn-primary">Login</button>
+          <div className="flex justify-between text-sm font-semibold text-[#b38a50]">
+            <Link to="/register">Create an account</Link>
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

@@ -35,11 +35,15 @@ export default function Checkout() {
   };
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-10">
+    <section className="page-shell max-w-6xl">
       <SEO title="Checkout | Chandira Kids" />
-      <h1 className="mb-6 text-3xl font-black">Checkout</h1>
-      {message && <p className="mb-4 rounded-md bg-mint p-3 font-bold text-mulberry">{message}</p>}
-      <form className="grid gap-6 lg:grid-cols-[1fr_320px]" onSubmit={submit}>
+      <div className="page-hero">
+        <p className="badge-tag">Checkout</p>
+        <h1 className="mt-2 text-3xl font-black text-[#171717]">Checkout</h1>
+        <p className="mt-2 muted-text">Complete your order securely</p>
+      </div>
+      {message && <p className="mb-4 mt-6 rounded-2xl bg-emerald-50 p-3 font-bold text-emerald-700">{message}</p>}
+      <form className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]" onSubmit={submit}>
         <div className="panel grid gap-3">
           <input placeholder="Full name" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} required />
           <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
@@ -57,8 +61,8 @@ export default function Checkout() {
           </select>
         </div>
         <aside className="panel h-fit space-y-3">
-          <h2 className="font-black">Order summary</h2>
-          {items.map((item) => <div key={item.key} className="flex justify-between text-sm"><span>{item.name} x {item.quantity}</span><strong>LKR {(item.price * item.quantity).toLocaleString()}</strong></div>)}
+          <h2 className="text-xl font-black text-[#171717]">Order summary</h2>
+          {items.map((item) => <div key={item.key} className="flex justify-between text-sm"><span className="text-[#5c5144]">{item.name} x {item.quantity}</span><strong className="text-[#171717]">LKR {(item.price * item.quantity).toLocaleString()}</strong></div>)}
           <input placeholder="Coupon code" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} />
           <button className="btn-primary w-full" disabled={!items.length}>Place order</button>
         </aside>

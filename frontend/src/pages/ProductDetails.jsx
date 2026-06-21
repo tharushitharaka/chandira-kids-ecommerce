@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { FiHeart, FiMessageCircle, FiShare2, FiShoppingBag, FiStar, FiZap } from 'react-icons/fi';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../api/client';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
@@ -67,15 +67,15 @@ export default function ProductDetails() {
 
   return (
     <>
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 lg:grid-cols-2">
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 lg:grid-cols-2 lg:px-6">
         <SEO title={product.seoTitle || `${product.name} | Chandira Kids`} description={product.seoDescription || product.description} />
         <div className="space-y-4">
-          <div className="overflow-hidden rounded-lg bg-white shadow-sm">
+          <div className="overflow-hidden rounded-[32px] bg-white shadow-sm ring-1 ring-[#ece3cf]">
             <img className="aspect-[4/5] w-full object-cover transition duration-500 hover:scale-110" src={mediaUrl(activeImage)} alt={product.name} />
           </div>
           <div className="grid grid-cols-4 gap-3">
             {product.images.map((image) => (
-              <button className="overflow-hidden rounded-lg border border-stone-200" key={image.url} onClick={() => setActiveImage(image.url)}>
+              <button className={`overflow-hidden rounded-2xl border ${activeImage === image.url ? 'border-[#c9a56d]' : 'border-[#ece3cf]'} bg-white`} key={image.url} onClick={() => setActiveImage(image.url)}>
                 <img className="aspect-square w-full object-cover" src={mediaUrl(image.url)} alt={image.alt || product.name} />
               </button>
             ))}
@@ -84,17 +84,17 @@ export default function ProductDetails() {
 
         <div className="space-y-6">
           <div>
-            <p className="font-bold uppercase text-petal">{product.category}</p>
-            <h1 className="text-4xl font-black">{product.name}</h1>
-            <p className="mt-1 text-sm font-bold text-teal">Product code: {product.code}</p>
-            <p className="mt-3 text-stone-600">{product.description}</p>
+            <p className="font-bold uppercase tracking-[0.18em] text-[#b38a50]">{product.category}</p>
+            <h1 className="mt-1 text-4xl font-semibold text-[#171717]">{product.name}</h1>
+            <p className="mt-1 text-sm font-semibold text-[#6a5f50]">Product code: {product.code}</p>
+            <p className="mt-3 text-[#5c5144]">{product.description}</p>
           </div>
 
           <div className="panel grid gap-3 sm:grid-cols-2">
-            <div><p className="text-sm text-stone-500">Retail price</p><p className="text-2xl font-black">LKR {product.price.toLocaleString()}</p></div>
-            <div><p className="text-sm text-stone-500">Wholesale price</p><p className="text-2xl font-black">LKR {product.wholesalePrice.toLocaleString()}</p></div>
-            <div><p className="text-sm text-stone-500">Age group</p><strong>{product.ageCategory}</strong><p>{product.ageRange}</p></div>
-            <div><p className="text-sm text-stone-500">Stock availability</p><strong className={stock > 5 ? 'text-teal' : 'text-primary'}>{stock > 0 ? `${stock} available` : 'Out of stock'}</strong></div>
+            <div><p className="text-sm text-[#6a5f50]">Retail price</p><p className="text-2xl font-black text-[#171717]">LKR {product.price.toLocaleString()}</p></div>
+            <div><p className="text-sm text-[#6a5f50]">Wholesale price</p><p className="text-2xl font-black text-[#171717]">LKR {product.wholesalePrice.toLocaleString()}</p></div>
+            <div><p className="text-sm text-[#6a5f50]">Age group</p><strong className="text-[#171717]">{product.ageCategory}</strong><p className="text-[#5c5144]">{product.ageRange}</p></div>
+            <div><p className="text-sm text-[#6a5f50]">Stock availability</p><strong className={stock > 5 ? 'text-emerald-600' : 'text-amber-600'}>{stock > 0 ? `${stock} available` : 'Out of stock'}</strong></div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
@@ -102,19 +102,19 @@ export default function ProductDetails() {
               {product.variants.map((variant) => <option key={variant.sku} value={variant.sku}>{variant.size} / {variant.color} / {variant.stock} left</option>)}
             </select>
             <input type="number" min="1" value={qty} onChange={(e) => setQty(e.target.value)} />
-            <label className="flex items-center gap-2 rounded-md border border-stone-300 bg-white px-3">
+            <label className="flex items-center gap-2 rounded-2xl border border-[#ece3cf] bg-white px-3 text-sm font-semibold text-[#5c5144]">
               <input type="checkbox" checked={wholesale} onChange={(e) => setWholesale(e.target.checked)} /> Wholesale
             </label>
           </div>
 
-          <div className="rounded-lg bg-cloud p-4">
-            <h2 className="font-black">Wholesale discount tiers</h2>
+          <div className="rounded-[28px] bg-[#f7efe0] p-5">
+            <h2 className="font-black text-[#171717]">Wholesale discount tiers</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               {[
                 [10, product.wholesalePrice],
                 [25, Math.round(product.wholesalePrice * 0.95)],
                 [50, Math.round(product.wholesalePrice * 0.9)]
-              ].map(([min, price]) => <div className="rounded-md bg-white p-3" key={min}><strong>{min}+ items</strong><p>LKR {price.toLocaleString()}</p></div>)}
+              ].map(([min, price]) => <div className="rounded-2xl bg-white p-3" key={min}><strong className="text-[#171717]">{min}+ items</strong><p className="mt-1 text-sm text-[#5c5144]">LKR {price.toLocaleString()}</p></div>)}
             </div>
           </div>
 
@@ -127,12 +127,12 @@ export default function ProductDetails() {
           </div>
 
           <div className="space-y-3">
-            <h2 className="text-xl font-black">Reviews</h2>
+            <h2 className="text-xl font-black text-[#171717]">Reviews</h2>
             {payload.reviews.map((item) => (
               <div key={item._id} className="panel">
-                <div className="flex items-center gap-1 text-gold">{Array.from({ length: item.rating }, (_, i) => <FiStar key={i} />)}</div>
-                <p className="font-bold">{item.title}</p>
-                <p className="text-sm text-stone-600">{item.comment}</p>
+                <div className="flex items-center gap-1 text-[#c9a56d]">{Array.from({ length: item.rating }, (_, i) => <FiStar key={i} className="fill-current" />)}</div>
+                <p className="mt-2 font-bold text-[#171717]">{item.title}</p>
+                <p className="text-sm text-[#5c5144]">{item.comment}</p>
               </div>
             ))}
             {user && (
@@ -147,7 +147,7 @@ export default function ProductDetails() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-10">
+      <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
         <h2 className="section-title mb-6">Related products</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{payload.relatedProducts?.map((item) => <ProductCard key={item._id} product={item} />)}</div>
       </section>

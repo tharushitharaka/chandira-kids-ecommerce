@@ -40,23 +40,28 @@ export default function Shop() {
   const setFilter = (key, value) => setFilters((current) => ({ ...current, [key]: value, page: key === 'page' ? value : '1' }));
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10">
+    <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
       <SEO title="Shop Girls Clothing | Chandira Kids" description="Filter Chandira Kids girls clothing by search, category, age, price, retail, wholesale, newest, and popularity." />
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="text-3xl font-black">Shop girls clothing</h1>
-          <p className="text-stone-600">{data.total} products with retail and wholesale options.</p>
+      <div className="mb-6 rounded-[32px] bg-gradient-to-r from-[#f7efe0] via-[#fffaf3] to-[#f3e7ce] p-8 shadow-sm ring-1 ring-[#ece3cf]">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#b38a50]">Collection</p>
+            <h1 className="mt-1 text-3xl font-semibold text-[#1f1f1f] md:text-4xl">Shop girls clothing</h1>
+            <p className="mt-2 text-[#5c5144]">{data.total} products with retail and wholesale options.</p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm font-semibold text-[#5c5144] shadow-sm ring-1 ring-[#ece3cf]">
+            <FiSliders /> Mobile-first filters
+          </div>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm font-bold text-teal shadow-sm"><FiSliders /> Mobile-first filters</div>
       </div>
 
-      <div className="mb-8 grid gap-3 rounded-lg border border-white/70 bg-white/80 p-4 shadow-sm backdrop-blur md:grid-cols-4 lg:grid-cols-7">
+      <div className="mb-8 grid gap-3 rounded-[28px] border border-[#ece3cf] bg-white p-4 shadow-sm md:grid-cols-4 lg:grid-cols-7">
         <label className="relative md:col-span-2">
-          <FiSearch className="absolute left-3 top-3 h-4 w-4 text-stone-400" />
+          <FiSearch className="absolute left-3 top-3 h-4 w-4 text-[#9a8575]" />
           <input className="w-full pl-9" placeholder="Search products" value={filters.search} onChange={(e) => setFilter('search', e.target.value)} />
           {suggestions.length > 0 && (
-            <div className="absolute left-0 right-0 top-12 z-30 rounded-lg border border-stone-200 bg-white p-2 shadow-xl">
-              {suggestions.map((item) => <Link className="block rounded-md p-2 text-sm hover:bg-linen" key={item._id} to={`/products/${item.slug}`}>{item.code} - {item.name}</Link>)}
+            <div className="absolute left-0 right-0 top-12 z-30 rounded-2xl border border-[#ece3cf] bg-white p-2 shadow-xl">
+              {suggestions.map((item) => <Link className="block rounded-xl p-2 text-sm hover:bg-[#fffaf1]" key={item._id} to={`/products/${item.slug}`}>{item.code} - {item.name}</Link>)}
             </div>
           )}
         </label>
