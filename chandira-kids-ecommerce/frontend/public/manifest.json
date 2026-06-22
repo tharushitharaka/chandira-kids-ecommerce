@@ -1,0 +1,46 @@
+{
+  "name": "Chandira Kids - Girls Fashion",
+  "short_name": "Chandira Kids",
+  "description": "Beautiful girls clothing for ages 0 to 15. Retail shopping and wholesale support for boutiques across Sri Lanka.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF4EB",
+  "theme_color": "#C43670",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["shopping", "fashion", "kids"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Shop",
+      "short_name": "Shop",
+      "description": "Browse our collection",
+      "url": "/shop"
+    },
+    {
+      "name": "New Arrivals",
+      "short_name": "New",
+      "description": "See what's new",
+      "url": "/shop?sort=newest"
+    },
+    {
+      "name": "Sale",
+      "short_name": "Sale",
+      "description": "Shop special offers",
+      "url": "/special-offers"
+    }
+  ]
+}
