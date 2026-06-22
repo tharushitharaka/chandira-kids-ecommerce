@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiGift, FiMail, FiCheckCircle, FiCreditCard, FiCalendar, FiDollarSign } from 'react-icons/fi';
+import { FiGift, FiMail, FiCheckCircle, FiCreditCard, FiCalendar } from 'react-icons/fi';
 import SEO from '../components/SEO';
 import toast from 'react-hot-toast';
 import api from '../api/client';
@@ -163,7 +163,6 @@ export default function GiftCards() {
               <div>
                 <label className="mb-2 block text-sm font-semibold text-ink">Gift Amount</label>
                 <div className="flex items-center gap-2 rounded-2xl border-2 border-brand-blush bg-brand-blush/30 px-4 py-3">
-                  <FiDollarSign className="h-5 w-5 text-brand-pink" />
                   <span className="text-xl font-bold text-ink">LKR {(customAmount || selectedAmount).toLocaleString()}</span>
                 </div>
               </div>

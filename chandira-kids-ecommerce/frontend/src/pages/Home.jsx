@@ -72,8 +72,8 @@ const editorialFeatures = [
     fabric: '100% Organic Cotton Blend',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.07.jpeg',
     link: '/shop?feature=soft-movement',
-    wholesalePrice: 42,
-    retailPrice: 85
+    wholesalePrice: 12600,
+    retailPrice: 25500
   },
   {
     id: 2,
@@ -83,8 +83,8 @@ const editorialFeatures = [
     fabric: 'Breathable Cotton Jersey',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.08.jpeg',
     link: '/shop?feature=school-confidence',
-    wholesalePrice: 38,
-    retailPrice: 75
+    wholesalePrice: 11400,
+    retailPrice: 22500
   },
   {
     id: 3,
@@ -94,8 +94,8 @@ const editorialFeatures = [
     fabric: 'Soft Stretch Fabric',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.09.jpeg',
     link: '/shop?feature=weekend-freedom',
-    wholesalePrice: 48,
-    retailPrice: 95
+    wholesalePrice: 14400,
+    retailPrice: 28500
   }
 ];
 
@@ -107,8 +107,8 @@ const trendingItems = [
     mood: 'Evening Elegance',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.10.jpeg',
     link: '/shop?trending=sunset-dress',
-    wholesalePrice: 45,
-    retailPrice: 89
+    wholesalePrice: 13500,
+    retailPrice: 26700
   },
   {
     id: 2,
@@ -116,8 +116,8 @@ const trendingItems = [
     mood: 'Cozy Comfort',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.11.jpeg',
     link: '/shop?trending=blush-cardigan',
-    wholesalePrice: 35,
-    retailPrice: 69
+    wholesalePrice: 10500,
+    retailPrice: 20700
   },
   {
     id: 3,
@@ -125,8 +125,8 @@ const trendingItems = [
     mood: 'Celebration Ready',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.12.jpeg',
     link: '/shop?trending=raspberry-gown',
-    wholesalePrice: 55,
-    retailPrice: 109
+    wholesalePrice: 16500,
+    retailPrice: 32700
   },
   {
     id: 4,
@@ -134,8 +134,8 @@ const trendingItems = [
     mood: 'Everyday Magic',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.13.jpeg',
     link: '/shop?trending=cream-skirt',
-    wholesalePrice: 30,
-    retailPrice: 59
+    wholesalePrice: 9000,
+    retailPrice: 17700
   },
   {
     id: 5,
@@ -143,14 +143,14 @@ const trendingItems = [
     mood: 'Fresh & Playful',
     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.14.jpeg',
     link: '/shop?trending=pink-blossom',
-    wholesalePrice: 28,
-    retailPrice: 55
+    wholesalePrice: 8400,
+    retailPrice: 16500
   }
 ];
 
 // Features/Benefits
 const features = [
-  { icon: FiTruck, title: 'Free Shipping', description: 'On orders over $50' },
+  { icon: FiTruck, title: 'Free Shipping', description: 'On orders over LKR 15,000' },
   { icon: FiShield, title: 'Quality Guarantee', description: '100% satisfaction' },
   { icon: FiHeart, title: 'Made with Love', description: 'Premium materials' }
 ];
@@ -268,8 +268,8 @@ export default function Home() {
                   <div className="p-3">
                     <h3 className="font-semibold text-sm mb-1" style={{ color: '#4A3B44' }}>{item.title}</h3>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm" style={{ color: '#C43670' }}>${item.retailPrice}</span>
-                      <span className="text-xs line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>${item.wholesalePrice}</span>
+                      <span className="font-bold text-sm" style={{ color: '#C43670' }}>LKR {item.retailPrice.toLocaleString()}</span>
+                      <span className="text-xs line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>LKR {item.wholesalePrice.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -339,8 +339,8 @@ export default function Home() {
                     <h3 className="font-semibold mb-1" style={{ color: '#4A3B44' }}>{feature.title}</h3>
                     <p className="text-sm mb-2" style={{ color: '#4A3B44', opacity: 0.7 }}>{feature.subtitle}</p>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold" style={{ color: '#C43670' }}>${feature.retailPrice}</span>
-                      <span className="text-sm line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>${feature.wholesalePrice}</span>
+                      <span className="font-bold" style={{ color: '#C43670' }}>LKR {feature.retailPrice.toLocaleString()}</span>
+                      <span className="text-sm line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>LKR {feature.wholesalePrice.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
