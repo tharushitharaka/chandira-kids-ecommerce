@@ -54,9 +54,10 @@ app.use(
   '/api',
   rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 1000, // Increased limit for development
+    limit: process.env.NODE_ENV === 'production' ? 1000 : 10000, // Much higher limit for development
     standardHeaders: true,
-    legacyHeaders: false
+    legacyHeaders: false,
+    skip: (req) => process.env.NODE_ENV !== 'production' // Skip rate limiting in development
   })
 );
 

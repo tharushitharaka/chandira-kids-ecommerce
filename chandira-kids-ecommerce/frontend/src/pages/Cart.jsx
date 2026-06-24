@@ -64,7 +64,7 @@ export default function Cart() {
               <div>
                 <Link className="font-bold text-ink hover:text-brand-rose dark:text-white" to={`/products/${item.slug}`}>{item.name}</Link>
                 <p className="text-sm text-muted">{item.size} / {item.color} / {item.sku}</p>
-                <p className="mt-1 text-sm text-muted">{item.wholesale ? 'Wholesale' : 'Retail'} • LKR {item.price.toLocaleString()}</p>
+                <p className="mt-1 text-sm text-muted">{item.wholesale ? 'Wholesale' : 'Retail'} • LKR {(item.price || 0).toLocaleString()}</p>
                 <label className="mt-2 flex items-center gap-2 text-body-sm font-semibold text-muted">
                   <input type="checkbox" checked={item.wholesale} onChange={() => toggleWholesale(item.key)} /> Wholesale pricing
                 </label>

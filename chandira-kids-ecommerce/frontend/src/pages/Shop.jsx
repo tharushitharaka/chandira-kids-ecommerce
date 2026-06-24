@@ -32,7 +32,7 @@ export default function Shop() {
     setSearchParams(params);
     setLoading(true);
     api.get('/products', { params }).then(({ data: response }) => setData(response)).finally(() => setLoading(false));
-  }, [filters, setSearchParams]);
+  }, [filters.search, filters.category, filters.ageCategory, filters.minPrice, filters.maxPrice, filters.priceType, filters.color, filters.size, filters.sort, filters.page, setSearchParams]);
 
   useEffect(() => {
     const handle = setTimeout(() => {

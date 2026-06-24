@@ -166,62 +166,48 @@ export default function Home() {
   };
 
   return (
-    <>
+    <section className="page-shell">
       <SEO title="Chandira Kids | Every Outfit Tells Her Story" description="Luxury girls fashion designed for every growing moment. Soft, playful, made with love." />
 
       {/* ========== HERO SECTION ========== */}
-      <section className="py-20 px-6 text-center" style={{ backgroundColor: '#FBF4EB' }}>
+      <section className="page-hero mb-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: '#C43670', fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Welcome to Chandira Kids
-          </h1>
-          <p className="text-lg md:text-xl mb-8" style={{ color: '#4A3B44' }}>
+          <p className="section-label">Welcome</p>
+          <h1 className="section-title mt-2">Chandira Kids</h1>
+          <p className="mx-auto mt-3 max-w-lg text-base text-ink/65">
             Beautiful clothing for beautiful moments
           </p>
 
-          <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-8">
+          <form onSubmit={handleSearch} className="max-w-xl mx-auto mt-6">
             <div className="flex gap-2">
               <input
-                className="flex-1 px-4 py-3 rounded-lg border outline-none"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderColor: '#FBD9E5',
-                  color: '#4A3B44'
-                }}
+                className="flex-1"
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-lg font-semibold text-white"
-                style={{ backgroundColor: '#C43670' }}
-              >
+              <button type="submit" className="btn-primary">
                 Search
               </button>
             </div>
           </form>
 
-          <Link
-            className="inline-block px-8 py-3 rounded-lg font-semibold text-white"
-            style={{ backgroundColor: '#C43670' }}
-            to="/shop"
-          >
+          <Link className="btn-primary mt-6" to="/shop">
             Shop All Products
           </Link>
         </div>
       </section>
 
       {/* ========== FEATURES BAR ========== */}
-      <section className="py-10 px-6" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <section className="py-10 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
             {features.map((feature, index) => (
               <div key={index}>
-                <feature.icon className="h-8 w-8 mx-auto mb-2" style={{ color: '#C43670' }} />
-                <p className="font-semibold mb-1" style={{ color: '#4A3B44' }}>{feature.title}</p>
-                <p className="text-sm" style={{ color: '#4A3B44', opacity: 0.7 }}>{feature.description}</p>
+                <feature.icon className="mx-auto mb-2 h-8 w-8 text-brand-raspberry" />
+                <p className="mb-1 font-semibold text-ink">{feature.title}</p>
+                <p className="text-sm text-ink/65">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -229,19 +215,20 @@ export default function Home() {
       </section>
 
       {/* ========== QUICK CATEGORIES ========== */}
-      <section className="py-16 px-6" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8" style={{ color: '#C43670', fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Shop by Category
-          </h2>
+      <section className="py-16 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <p className="section-label">Categories</p>
+            <h2 className="section-title mt-2">Shop by Category</h2>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
             {categories.map((category) => (
               <Link key={category.id} to={category.link}>
-                <div className="text-center p-4 rounded-lg border hover:shadow-md transition-shadow" style={{ backgroundColor: '#FBF4EB', borderColor: '#FBD9E5' }}>
-                  <div className="text-3xl mb-2">{category.icon}</div>
-                  <h3 className="font-semibold text-sm" style={{ color: '#C43670' }}>{category.name}</h3>
-                  <p className="text-xs mt-1" style={{ color: '#4A3B44', opacity: 0.7 }}>{category.count} items</p>
+                <div className="soft-card text-center p-4 hover:shadow-md transition-shadow">
+                  <div className="mb-2 text-3xl">{category.icon}</div>
+                  <h3 className="text-sm font-semibold text-brand-raspberry">{category.name}</h3>
+                  <p className="mt-1 text-xs text-ink/65">{category.count} items</p>
                 </div>
               </Link>
             ))}
@@ -250,26 +237,27 @@ export default function Home() {
       </section>
 
       {/* ========== TRENDING NOW ========== */}
-      <section className="py-16 px-6" style={{ backgroundColor: '#FBF4EB' }}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8" style={{ color: '#C43670', fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Trending Products
-          </h2>
+      <section className="py-16 px-6 bg-brand-champagne">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <p className="section-label">Trending</p>
+            <h2 className="section-title mt-2">Trending Products</h2>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {trendingItems.map((item) => (
               <Link key={item.id} to={item.link}>
-                <div className="rounded-lg overflow-hidden border hover:shadow-md transition-shadow" style={{ backgroundColor: '#FFFFFF', borderColor: '#FBD9E5' }}>
+                <div className="soft-card overflow-hidden hover:shadow-md transition-shadow">
                   <img
-                    className="w-full aspect-[3/4] object-cover"
+                    className="aspect-[3/4] w-full object-cover"
                     src={item.image}
                     alt={item.title}
                   />
                   <div className="p-3">
-                    <h3 className="font-semibold text-sm mb-1" style={{ color: '#4A3B44' }}>{item.title}</h3>
+                    <h3 className="mb-1 text-sm font-semibold text-ink">{item.title}</h3>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm" style={{ color: '#C43670' }}>LKR {item.retailPrice.toLocaleString()}</span>
-                      <span className="text-xs line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>LKR {item.wholesalePrice.toLocaleString()}</span>
+                      <span className="text-sm font-bold text-brand-raspberry">LKR {item.retailPrice.toLocaleString()}</span>
+                      <span className="text-xs line-through text-ink/50">LKR {item.wholesalePrice.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -277,12 +265,8 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <Link
-              className="inline-block px-6 py-2 rounded-lg font-semibold text-white"
-              style={{ backgroundColor: '#C43670' }}
-              to="/shop"
-            >
+          <div className="mt-8 text-center">
+            <Link className="btn-primary" to="/shop">
               View All Products
             </Link>
           </div>
@@ -290,24 +274,25 @@ export default function Home() {
       </section>
 
       {/* ========== MOOD SHOPPING ZONES ========== */}
-      <section className="py-16 px-6" style={{ backgroundColor: '#FFFFFF' }}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8" style={{ color: '#C43670', fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Shop by Occasion
-          </h2>
+      <section className="py-16 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <p className="section-label">Occasions</p>
+            <h2 className="section-title mt-2">Shop by Occasion</h2>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {moodZones.map((zone) => (
               <Link key={zone.id} to={zone.link}>
-                <div className="rounded-lg overflow-hidden border hover:shadow-md transition-shadow" style={{ backgroundColor: '#FFFFFF', borderColor: '#FBD9E5' }}>
+                <div className="soft-card overflow-hidden hover:shadow-md transition-shadow">
                   <img
-                    className="w-full aspect-square object-cover"
+                    className="aspect-square w-full object-cover"
                     src={zone.image}
                     alt={zone.title}
                   />
                   <div className="p-3 text-center">
-                    <div className="text-2xl mb-1">{zone.emoji}</div>
-                    <h3 className="font-semibold text-sm" style={{ color: '#C43670' }}>{zone.title}</h3>
+                    <div className="mb-1 text-2xl">{zone.emoji}</div>
+                    <h3 className="text-sm font-semibold text-brand-raspberry">{zone.title}</h3>
                   </div>
                 </div>
               </Link>
@@ -317,30 +302,31 @@ export default function Home() {
       </section>
 
       {/* ========== EDITORIAL FEATURE COLLECTION ========== */}
-      <section className="py-16 px-6" style={{ backgroundColor: '#FBF4EB' }}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8" style={{ color: '#C43670', fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Featured Collection
-          </h2>
+      <section className="py-16 px-6 bg-brand-champagne">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <p className="section-label">Featured</p>
+            <h2 className="section-title mt-2">Featured Collection</h2>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {editorialFeatures.map((feature) => (
               <Link key={feature.id} to={feature.link}>
-                <div className="rounded-lg overflow-hidden border hover:shadow-md transition-shadow" style={{ backgroundColor: '#FFFFFF', borderColor: '#FBD9E5' }}>
+                <div className="soft-card overflow-hidden hover:shadow-md transition-shadow">
                   <img
-                    className="w-full aspect-[4/5] object-cover"
+                    className="aspect-[4/5] w-full object-cover"
                     src={feature.image}
                     alt={feature.title}
                   />
                   <div className="p-4">
-                    <span className="text-xs font-semibold mb-2 inline-block px-2 py-1 rounded" style={{ backgroundColor: '#FBD9E5', color: '#C43670' }}>
+                    <span className="badge-tag mb-2 inline-block">
                       {feature.fabric}
                     </span>
-                    <h3 className="font-semibold mb-1" style={{ color: '#4A3B44' }}>{feature.title}</h3>
-                    <p className="text-sm mb-2" style={{ color: '#4A3B44', opacity: 0.7 }}>{feature.subtitle}</p>
+                    <h3 className="mb-1 font-semibold text-ink">{feature.title}</h3>
+                    <p className="mb-2 text-sm text-ink/65">{feature.subtitle}</p>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold" style={{ color: '#C43670' }}>LKR {feature.retailPrice.toLocaleString()}</span>
-                      <span className="text-sm line-through" style={{ color: '#4A3B44', opacity: 0.5 }}>LKR {feature.wholesalePrice.toLocaleString()}</span>
+                      <span className="font-bold text-brand-raspberry">LKR {feature.retailPrice.toLocaleString()}</span>
+                      <span className="text-sm line-through text-ink/50">LKR {feature.wholesalePrice.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -350,6 +336,6 @@ export default function Home() {
         </div>
       </section>
 
-    </>
+    </section>
   );
 }

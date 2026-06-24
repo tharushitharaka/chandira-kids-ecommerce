@@ -5,7 +5,19 @@ const CartContext = createContext(null);
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState(() => {
     const stored = localStorage.getItem('ck_cart');
-    return stored ? JSON.parse(stored) : [];
+    if (!stored) return [];
+    try {
+      const parsed = JSON.parse(stored);
+      // Filter out invalid items and add default price if missing
+      return parsed.filter(item => item && item.key).map(item => ({
+        ...item,
+        price: item.price ?? (item.wholesale ? item.wholesalePrice : item.retailPrice) ?? 0,
+        retailPrice: item.retailPrice ?? 0,
+        wholesalePrice: item.wholesalePrice ?? 0
+      }));
+    } catch {
+      return [];
+    }
   });
 
   useEffect(() => {

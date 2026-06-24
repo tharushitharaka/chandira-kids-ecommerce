@@ -57,8 +57,12 @@ class ErrorBoundary extends React.Component {
                 overflow: 'auto'
               }}>
                 {this.state.error && this.state.error.toString()}
-                <br />
-                {this.state.errorInfo.componentStack}
+                {this.state.errorInfo && (
+                  <>
+                    <br />
+                    {this.state.errorInfo.componentStack}
+                  </>
+                )}
               </pre>
             </details>
           )}
