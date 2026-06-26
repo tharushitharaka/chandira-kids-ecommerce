@@ -5,12 +5,21 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: '#F283AF',    /* Tickle Me Pink - Main brand color */
-          raspberry: '#C43670',   /* Raspberry Rose - Buttons, badges, headings */
-          champagne: '#FBF4EB',   /* Champagne - Background */
-          blush: '#FBD9E5',       /* Blush - Light pink accents */
-          cherry: '#E8B8C9',      /* Cherry Blossom - Accent */
-          sunset: '#F3CC97'      /* Sunset - Highlight */
+          primary:   '#F283AF',  /* Tickle Me Pink  - Main brand color        */
+          raspberry: '#C43670',  /* Raspberry Rose  - Buttons, badges          */
+          champagne: '#FBF4EB',  /* Champagne       - Background               */
+          blush:     '#FBD9E5',  /* Blush           - Light pink accents       */
+          cherry:    '#E8B8C9',  /* Cherry Blossom  - Accent                   */
+          sunset:    '#F3CC97',  /* Sunset          - Highlight / gold accents  */
+          navy:      '#2F4156',  /* Navy            - Dark contrast text        */
+          palePink:  '#FFE1E6',  /* Pale Pink       - Ultra-soft bg            */
+          azalea:    '#F7C9D4',  /* Azalea          - Mid-pink accent           */
+          skyBlue:   '#C8D9E6',  /* Sky Blue        - Calm accent              */
+          beige:     '#F5EFEB',  /* Beige           - Warm neutral bg          */
+          /* ── Aliases used across components (critical - do NOT remove) ── */
+          rose:      '#C43670',  /* alias → raspberry  used in 80+ components  */
+          pink:      '#F283AF',  /* alias → primary    used in 40+ components  */
+          deep:      '#9B2455',  /* darker raspberry   used in hover states     */
         },
         text: {
           dark: '#4A3B44',

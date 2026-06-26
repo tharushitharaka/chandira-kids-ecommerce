@@ -1,35 +1,53 @@
+import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-import AdminDashboard from './pages/AdminDashboard';
-import BlogDetail from './pages/BlogDetail';
-import Blog from './pages/Blog';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import Compare from './pages/Compare';
-import Dashboard from './pages/Dashboard';
-import Faq from './pages/Faq';
-import ForgotPassword from './pages/ForgotPassword';
-import GiftCards from './pages/GiftCards';
-import Home from './pages/Home';
-import Loyalty from './pages/Loyalty';
-import Login from './pages/Login';
-import NewsletterUnsubscribe from './pages/NewsletterUnsubscribe';
-import NotFound from './pages/NotFound';
-import OrderConfirmation from './pages/OrderConfirmation';
-import OrderDetail from './pages/OrderDetail';
-import OrderTracking from './pages/OrderTracking';
-import ProductDetails from './pages/ProductDetails';
-import Register from './pages/Register';
-import Returns from './pages/Returns';
-import ResetPassword from './pages/ResetPassword';
-import Shipping from './pages/Shipping';
-import Shop from './pages/Shop';
-import SizeGuide from './pages/SizeGuide';
-import { About, Contact, SpecialOffers } from './pages/StaticPage';
-import Wholesale from './pages/Wholesale';
-import Wishlist from './pages/Wishlist';
 import { useAuth } from './context/AuthContext';
 
+/* ── Lazy-loaded pages (code splitting — each page is its own chunk) ─── */
+const Home               = lazy(() => import('./pages/Home'));
+const Shop               = lazy(() => import('./pages/Shop'));
+const ProductDetails     = lazy(() => import('./pages/ProductDetails'));
+const Cart               = lazy(() => import('./pages/Cart'));
+const Checkout           = lazy(() => import('./pages/Checkout'));
+const OrderConfirmation  = lazy(() => import('./pages/OrderConfirmation'));
+const OrderDetail        = lazy(() => import('./pages/OrderDetail'));
+const OrderTracking      = lazy(() => import('./pages/OrderTracking'));
+const Wholesale          = lazy(() => import('./pages/Wholesale'));
+const Faq                = lazy(() => import('./pages/Faq'));
+const Blog               = lazy(() => import('./pages/Blog'));
+const BlogDetail         = lazy(() => import('./pages/BlogDetail'));
+const GiftCards          = lazy(() => import('./pages/GiftCards'));
+const Compare            = lazy(() => import('./pages/Compare'));
+const SizeGuide          = lazy(() => import('./pages/SizeGuide'));
+const Returns            = lazy(() => import('./pages/Returns'));
+const Shipping           = lazy(() => import('./pages/Shipping'));
+const Loyalty            = lazy(() => import('./pages/Loyalty'));
+const Dashboard          = lazy(() => import('./pages/Dashboard'));
+const Wishlist           = lazy(() => import('./pages/Wishlist'));
+const Login              = lazy(() => import('./pages/Login'));
+const Register           = lazy(() => import('./pages/Register'));
+const ForgotPassword     = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword      = lazy(() => import('./pages/ResetPassword'));
+const AdminDashboard     = lazy(() => import('./pages/AdminDashboard'));
+const NewsletterUnsubscribe = lazy(() => import('./pages/NewsletterUnsubscribe'));
+const NotFound           = lazy(() => import('./pages/NotFound'));
+const { About, Contact, SpecialOffers } = {
+  About:         lazy(() => import('./pages/StaticPage').then(m => ({ default: m.About }))),
+  Contact:       lazy(() => import('./pages/StaticPage').then(m => ({ default: m.Contact }))),
+  SpecialOffers: lazy(() => import('./pages/StaticPage').then(m => ({ default: m.SpecialOffers }))),
+};
+
+/* ── Page-level loading skeleton ──────────────────────────────────── */
+function PageLoader() {
+  return (
+    <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 40, height: 40, borderRadius: '50%', border: '3px solid #FBD9E5', borderTopColor: '#C43670', animation: 'spin 0.8s linear infinite' }} />
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
+
+/* ── Route guard ──────────────────────────────────────────────────── */
 const Protected = ({ children, admin = false }) => {
   const { user, isAdmin } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
@@ -39,39 +57,41 @@ const Protected = ({ children, admin = false }) => {
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/products/:slug" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/orders/:id" element={<OrderDetail />} />
-        <Route path="/track-order" element={<OrderTracking />} />
-        <Route path="/wholesale" element={<Wholesale />} />
-        <Route path="/special-offers" element={<SpecialOffers />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/size-guide" element={<SizeGuide />} />
-        <Route path="/returns" element={<Returns />} />
-        <Route path="/shipping" element={<Shipping />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/gift-cards" element={<GiftCards />} />
-        <Route path="/compare" element={<Compare />} />
-        <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
-        <Route path="/wishlist" element={<Protected><Wishlist /></Protected>} />
-        <Route path="/loyalty" element={<Protected><Loyalty /></Protected>} />
-        <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/admin" element={<Protected admin><AdminDashboard /></Protected>} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/"                       element={<Home />} />
+          <Route path="/shop"                   element={<Shop />} />
+          <Route path="/products/:slug"         element={<ProductDetails />} />
+          <Route path="/cart"                   element={<Cart />} />
+          <Route path="/checkout"               element={<Checkout />} />
+          <Route path="/order-confirmation"     element={<OrderConfirmation />} />
+          <Route path="/orders/:id"             element={<OrderDetail />} />
+          <Route path="/track-order"            element={<OrderTracking />} />
+          <Route path="/wholesale"              element={<Wholesale />} />
+          <Route path="/special-offers"         element={<SpecialOffers />} />
+          <Route path="/about"                  element={<About />} />
+          <Route path="/contact"                element={<Contact />} />
+          <Route path="/size-guide"             element={<SizeGuide />} />
+          <Route path="/returns"                element={<Returns />} />
+          <Route path="/shipping"               element={<Shipping />} />
+          <Route path="/faq"                    element={<Faq />} />
+          <Route path="/blog"                   element={<Blog />} />
+          <Route path="/blog/:id"               element={<BlogDetail />} />
+          <Route path="/gift-cards"             element={<GiftCards />} />
+          <Route path="/compare"                element={<Compare />} />
+          <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
+          <Route path="/wishlist"               element={<Protected><Wishlist /></Protected>} />
+          <Route path="/loyalty"                element={<Protected><Loyalty /></Protected>} />
+          <Route path="/dashboard"              element={<Protected><Dashboard /></Protected>} />
+          <Route path="/login"                  element={<Login />} />
+          <Route path="/register"               element={<Register />} />
+          <Route path="/forgot-password"        element={<ForgotPassword />} />
+          <Route path="/reset-password/:token"  element={<ResetPassword />} />
+          <Route path="/admin"                  element={<Protected admin><AdminDashboard /></Protected>} />
+          <Route path="*"                       element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }

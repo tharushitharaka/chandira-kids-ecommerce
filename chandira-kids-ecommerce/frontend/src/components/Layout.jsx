@@ -53,9 +53,11 @@ export default function Layout() {
 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <Link to="/" className="flex shrink-0 items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-primary to-brand-raspberry text-sm font-extrabold tracking-widest text-white shadow-soft">
-              CK
-            </div>
+            <img
+              src="/images/logo.jpg"
+              alt="Chandira Kids Logo"
+              className="h-12 w-12 rounded-2xl object-cover shadow-soft transition hover:scale-105"
+            />
             <div className="hidden leading-tight sm:block">
               <span className="heading-serif text-lg font-bold text-brand-raspberry">Chandira Kids</span>
               <span className="mt-0.5 block text-xs font-bold uppercase tracking-[0.2em] text-brand-primary">Girls fashion 0–15</span>
@@ -170,7 +172,11 @@ export default function Layout() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <div>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-primary to-brand-raspberry text-xs font-extrabold tracking-widest text-white">CK</div>
+              <img
+                src="/images/logo.jpg"
+                alt="Chandira Kids Logo"
+                className="h-10 w-10 rounded-xl object-cover shadow-soft"
+              />
               <strong className="heading-serif text-lg font-bold text-brand-raspberry">Chandira Kids</strong>
             </div>
             <p className="mt-4 text-body-sm leading-relaxed text-muted">Beautiful girls clothing for ages 0 to 15. Retail shopping and wholesale support for boutiques across the island.</p>
