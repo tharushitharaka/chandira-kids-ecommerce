@@ -45,6 +45,9 @@ export default function ProductDetails() {
       setVariantSku(data.product.variants?.[0]?.sku || '');
       setActiveImage(data.product.images?.[0]?.url || '');
       addToRecentlyViewed(data.product);
+    }).catch((error) => {
+      console.error('Error loading product:', error);
+      toast.error('Failed to load product');
     }).finally(() => setLoading(false));
   }, [slug, addToRecentlyViewed]);
 

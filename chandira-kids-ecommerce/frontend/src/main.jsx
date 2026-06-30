@@ -13,15 +13,16 @@ import { SearchHistoryProvider } from './context/SearchHistoryContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import './index.css';
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
+// Temporarily disabled service worker to prevent caching issues during development
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('/sw.js').catch(() => {});
+//   });
+// }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <HelmetProvider>
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ErrorBoundary>
         <ThemeProvider>
           <AuthProvider>

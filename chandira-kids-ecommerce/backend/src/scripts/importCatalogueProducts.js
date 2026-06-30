@@ -18,15 +18,18 @@ const run = async () => {
   for (const product of catalogueProducts) {
     const existing = await Product.findOne({ slug: product.slug });
     
+    // Ensure isPublished is set to true for all catalogue products
+    const productData = { ...product, isPublished: true };
+    
     if (existing) {
       await Product.findOneAndUpdate(
         { slug: product.slug },
-        product,
+        productData,
         { new: true, runValidators: true }
       );
       updatedCount++;
     } else {
-      await Product.create(product);
+      await Product.create(productData);
       importedCount++;
     }
   }

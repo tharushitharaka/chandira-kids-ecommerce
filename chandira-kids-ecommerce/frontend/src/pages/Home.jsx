@@ -30,17 +30,17 @@ const moodZones = [
 ];
 
 const editorialFeatures = [
-  { id: 1, title: 'The Soft Movement Dress',      subtitle: 'Designed for gentle motion',   fabric: '100% Organic Cotton',    image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.07.jpeg', link: '/shop?feature=soft-movement',     retailPrice: 25500, wholesalePrice: 12600 },
-  { id: 2, title: 'School Day Confidence Set',    subtitle: 'Comfort meets confidence',     fabric: 'Breathable Cotton Jersey', image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.08.jpeg', link: '/shop?feature=school-confidence', retailPrice: 22500, wholesalePrice: 11400 },
-  { id: 3, title: 'Weekend Freedom Collection',   subtitle: 'Playful weekends, perfect style', fabric: 'Soft Stretch Fabric',  image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.09.jpeg', link: '/shop?feature=weekend-freedom',   retailPrice: 28500, wholesalePrice: 14400 },
+  { id: 1, title: 'The Soft Movement Dress',      subtitle: 'Designed for gentle motion',   fabric: '100% Organic Cotton',    image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.07.jpeg', link: '/shop?feature=soft-movement',     retailPrice: 1500, wholesalePrice: 1000 },
+  { id: 2, title: 'School Day Confidence Set',    subtitle: 'Comfort meets confidence',     fabric: 'Breathable Cotton Jersey', image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.08.jpeg', link: '/shop?feature=school-confidence', retailPrice: 1350, wholesalePrice: 900 },
+  { id: 3, title: 'Weekend Freedom Collection',   subtitle: 'Playful weekends, perfect style', fabric: 'Soft Stretch Fabric',  image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.09.jpeg', link: '/shop?feature=weekend-freedom',   retailPrice: 1600, wholesalePrice: 1050 },
 ];
 
 const trendingItems = [
-  { id: 1, title: 'Sunset Gradient Dress',  mood: 'Evening Elegance',    image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.10.jpeg', link: '/shop?trending=sunset-dress',     retailPrice: 26700, wholesalePrice: 13500 },
-  { id: 2, title: 'Blush Cloud Cardigan',   mood: 'Cozy Comfort',        image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.11.jpeg', link: '/shop?trending=blush-cardigan',   retailPrice: 20700, wholesalePrice: 10500 },
-  { id: 3, title: 'Raspberry Party Gown',   mood: 'Celebration Ready',   image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.12.jpeg', link: '/shop?trending=raspberry-gown',   retailPrice: 32700, wholesalePrice: 16500 },
-  { id: 4, title: 'Cream Dream Skirt',      mood: 'Everyday Magic',      image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.13.jpeg', link: '/shop?trending=cream-skirt',      retailPrice: 17700, wholesalePrice: 9000  },
-  { id: 5, title: 'Pink Blossom Top',       mood: 'Fresh & Playful',     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.14.jpeg', link: '/shop?trending=pink-blossom',     retailPrice: 16500, wholesalePrice: 8400  },
+  { id: 1, title: 'Sunset Gradient Dress',  mood: 'Evening Elegance',    image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.10.jpeg', link: '/shop?trending=sunset-dress',     retailPrice: 1450, wholesalePrice: 950 },
+  { id: 2, title: 'Blush Cloud Cardigan',   mood: 'Cozy Comfort',        image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.11.jpeg', link: '/shop?trending=blush-cardigan',   retailPrice: 1200, wholesalePrice: 800 },
+  { id: 3, title: 'Raspberry Party Gown',   mood: 'Celebration Ready',   image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.12.jpeg', link: '/shop?trending=raspberry-gown',   retailPrice: 1650, wholesalePrice: 1100 },
+  { id: 4, title: 'Cream Dream Skirt',      mood: 'Everyday Magic',      image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.13.jpeg', link: '/shop?trending=cream-skirt',      retailPrice: 1150, wholesalePrice: 750 },
+  { id: 5, title: 'Pink Blossom Top',       mood: 'Fresh & Playful',     image: '/images/products/product/WhatsApp Image 2026-06-21 at 11.04.14.jpeg', link: '/shop?trending=pink-blossom',     retailPrice: 1050, wholesalePrice: 680 },
 ];
 
 const trustBadges = [

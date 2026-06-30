@@ -25,7 +25,8 @@ router.post('/register', async (req, res, next) => {
     }
 
     const user = await User.create({ name, email, password, phone });
-    await sendEmail({ to: user.email, subject: 'Welcome to Chandira Kids', html: welcomeTemplate(user) });
+    // Disabled email sending for development to prevent timeout
+    // await sendEmail({ to: user.email, subject: 'Welcome to Chandira Kids', html: welcomeTemplate(user) });
     res.status(201).json({ user: userPayload(user), token: signToken(user) });
   } catch (error) {
     next(error);
@@ -60,8 +61,9 @@ router.post('/forgot-password', async (req, res, next) => {
       user.passwordResetToken = crypto.createHash('sha256').update(plainToken).digest('hex');
       user.passwordResetExpires = Date.now() + 30 * 60 * 1000;
       await user.save({ validateBeforeSave: false });
-      const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password/${plainToken}`;
-      await sendEmail({ to: user.email, subject: 'Reset your Chandira Kids password', html: passwordResetTemplate(user, resetUrl) });
+      // Disabled email sending for development
+      // const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password/${plainToken}`;
+      // await sendEmail({ to: user.email, subject: 'Reset your Chandira Kids password', html: passwordResetTemplate(user, resetUrl) });
     }
     res.json({ message: 'If that email exists, a reset link has been sent' });
   } catch (error) {

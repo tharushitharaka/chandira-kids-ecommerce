@@ -17,8 +17,8 @@ export const catalogueProducts = [
     category: 'Clothing Sets',
     ageCategory: 'Little Girls (4-7 years)',
     ageRange: 'Sizes S, M, L',
-    price: 0,
-    wholesalePrice: 0,
+    salePrice: 1500,
+    wholesalePrice: 1000,
     wholesaleMinQty: 6,
     featured: true,
     description:
@@ -41,8 +41,8 @@ export const catalogueProducts = [
     category: 'Party Dresses',
     ageCategory: 'Little Girls (4-7 years)',
     ageRange: 'Sizes S, M, L',
-    price: 0,
-    wholesalePrice: 0,
+    salePrice: 1600,
+    wholesalePrice: 1050,
     wholesaleMinQty: 6,
     featured: true,
     description:
