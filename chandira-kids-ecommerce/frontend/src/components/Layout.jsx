@@ -65,7 +65,7 @@ export default function Layout() {
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <NavLink className="relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-primary to-brand-raspberry px-4 py-2.5 text-body-sm font-bold text-white shadow-soft transition hover:shadow-glow" to="/cart">
+            <NavLink className="relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-primary to-brand-raspberry px-3 py-2.5 text-body-sm font-bold text-white shadow-soft transition hover:shadow-glow sm:px-4" to="/cart">
               <FiShoppingBag className="h-5 w-5" />
               <span className="hidden sm:inline">Cart</span>
               {count > 0 && (
@@ -74,10 +74,16 @@ export default function Layout() {
                 </span>
               )}
             </NavLink>
-            <NavLink className="hidden rounded-full border-2 border-brand-blush px-4 py-2.5 text-body-sm font-bold text-brand-raspberry transition hover:border-brand-primary hover:bg-brand-blush/40 md:inline-flex" to={user ? '/dashboard' : '/login'}>
+            <NavLink className="hidden rounded-full border-2 border-brand-blush px-3 py-2.5 text-body-sm font-bold text-brand-raspberry transition hover:border-brand-primary hover:bg-brand-blush/40 lg:inline-flex xl:px-4" to={user ? '/dashboard' : '/login'}>
               <FiUser className="mr-1.5 h-4 w-4" />
-              {user ? 'Account' : 'Sign in'}
+              <span className="hidden xl:inline">{user ? 'Account' : 'Sign in'}</span>
             </NavLink>
+            {user && (
+              <button className="hidden rounded-full border-2 border-brand-blush px-3 py-2.5 text-body-sm font-bold text-brand-raspberry transition hover:border-brand-primary hover:bg-brand-blush/40 lg:inline-flex xl:px-4 items-center gap-2" onClick={logout}>
+                <FiLogOut className="h-4 w-4" />
+                <span className="hidden xl:inline">Logout</span>
+              </button>
+            )}
             <button
               className="inline-flex items-center justify-center rounded-xl p-2.5 text-text-dark transition hover:bg-brand-blush/50 lg:hidden"
               onClick={() => setOpen((value) => !value)}

@@ -20,12 +20,12 @@ const products = [
   ['Everyday Pastel Tee Set', 'Clothing Sets', 'Little Girls (4-7 years)', '3-10 years', 3450, 2600, false],
   ['Tiny Bow Hairband Pack', 'Hairbands', 'Infants (0-12 months)', '0-15 years', 1250, 900, true],
   ['Seasonal Cloud Sleepsuit', 'Seasonal Collections', 'Infants (0-12 months)', '0-6 months', 2450, 1800, false]
-].map(([name, category, ageCategory, ageRange, price, wholesalePrice, featured], index) => ({
+].map(([name, category, ageCategory, ageRange, salePrice, wholesalePrice, featured], index) => ({
   name,
   category,
   ageCategory,
   ageRange,
-  price,
+  salePrice,
   wholesalePrice,
   wholesaleMinQty: 6,
   featured,

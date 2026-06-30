@@ -3,6 +3,7 @@ import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import api from '../api/client';
 
 /* ─── BRAND COLORS ───────────────────────────────────────────────── */
 // Tickle Me Pink  #F283AF   |  Champagne    #FBF4EB
@@ -106,8 +107,20 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [heroLoaded, setHeroLoaded]   = useState(false);
   const [activeTrend, setActiveTrend] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { const t = setTimeout(() => setHeroLoaded(true), 80); return () => clearTimeout(t); }, []);
+  useEffect(() => { 
+    const t = setTimeout(() => setHeroLoaded(true), 80); 
+    return () => clearTimeout(t); 
+  }, []);
+
+  useEffect(() => {
+    api.get('/products', { params: { sort: 'newest', limit: 12 } })
+      .then(({ data }) => setProducts(data.products || []))
+      .catch(err => console.error('Failed to fetch products:', err))
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -208,7 +221,7 @@ export default function Home() {
       <CategoryGrid />
 
       {/* ══ TRENDING CAROUSEL ════════════════════════════════════════ */}
-      <TrendingSection items={trendingItems} active={activeTrend} setActive={setActiveTrend} />
+      <TrendingSection items={products.slice(0, 5)} active={activeTrend} setActive={setActiveTrend} loading={loading} />
 
       {/* ══ SHOP BY OCCASION ═════════════════════════════════════════ */}
       <OccasionSection />
@@ -287,8 +300,30 @@ function CategoryGrid() {
 }
 
 /* ─── TRENDING SECTION ──────────────────────────────────────────── */
-function TrendingSection({ items, active, setActive }) {
+function TrendingSection({ items, active, setActive, loading }) {
   const [ref, visible] = useScrollReveal();
+  
+  if (loading) {
+    return (
+      <section ref={ref} style={{ position: 'relative', zIndex: 1, padding: '4rem 1.5rem', background: 'linear-gradient(135deg, #FBD9E5 0%, #FBF4EB 50%, #F7C9D4 100%)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+          <p>Loading products...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!items || items.length === 0) {
+    return (
+      <section ref={ref} style={{ position: 'relative', zIndex: 1, padding: '4rem 1.5rem', background: 'linear-gradient(135deg, #FBD9E5 0%, #FBF4EB 50%, #F7C9D4 100%)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(1.75rem,4vw,2.75rem)', fontWeight: 700, color: '#2F4156', margin: 0 }}>Trending Now</h2>
+          <p style={{ marginTop: '1rem', color: '#4A3B44', opacity: 0.7 }}>No products available yet. Check back soon!</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section ref={ref} style={{ position: 'relative', zIndex: 1, padding: '4rem 1.5rem', background: 'linear-gradient(135deg, #FBD9E5 0%, #FBF4EB 50%, #F7C9D4 100%)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -303,34 +338,42 @@ function TrendingSection({ items, active, setActive }) {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: '1.25rem' }}>
-          {items.map((item, i) => (
-            <Link
-              key={item.id}
-              to={item.link}
-              style={{ textDecoration: 'none', opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(28px)', transition: `all 0.65s ease ${i * 0.08}s` }}
-            >
-              <div
-                style={{ background: '#fff', borderRadius: '1.5rem', overflow: 'hidden', border: '1.5px solid rgba(251,217,229,0.7)', transition: 'all 0.32s ease', cursor: 'pointer' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 60px rgba(196,54,112,0.18)'; e.currentTarget.style.borderColor = '#F283AF'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = 'rgba(251,217,229,0.7)'; }}
+          {items.map((item, i) => {
+            const imageUrl = item.images?.[0]?.url || item.image || '/placeholder.jpg';
+            const productLink = `/products/${item.slug}`;
+            const productName = item.name || item.title;
+            const productPrice = item.price || item.retailPrice;
+            const productMood = item.category || item.mood || 'New Arrival';
+            
+            return (
+              <Link
+                key={item._id || item.id}
+                to={productLink}
+                style={{ textDecoration: 'none', opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(28px)', transition: `all 0.65s ease ${i * 0.08}s` }}
               >
-                <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}>
-                  <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
-                    onMouseEnter={e => { e.target.style.transform = 'scale(1.07)'; }}
-                    onMouseLeave={e => { e.target.style.transform = ''; }}
-                  />
-                  <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', background: 'linear-gradient(135deg,#F283AF,#C43670)', color: '#fff', borderRadius: '9999px', padding: '0.25rem 0.65rem', fontSize: '0.7rem', fontWeight: 700 }}>
-                    🔥 Trending
+                <div
+                  style={{ background: '#fff', borderRadius: '1.5rem', overflow: 'hidden', border: '1.5px solid rgba(251,217,229,0.7)', transition: 'all 0.32s ease', cursor: 'pointer' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 60px rgba(196,54,112,0.18)'; e.currentTarget.style.borderColor = '#F283AF'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; e.currentTarget.style.borderColor = 'rgba(251,217,229,0.7)'; }}
+                >
+                  <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}>
+                    <img src={imageUrl} alt={productName} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
+                      onMouseEnter={e => { e.target.style.transform = 'scale(1.07)'; }}
+                      onMouseLeave={e => { e.target.style.transform = ''; }}
+                    />
+                    <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', background: 'linear-gradient(135deg,#F283AF,#C43670)', color: '#fff', borderRadius: '9999px', padding: '0.25rem 0.65rem', fontSize: '0.7rem', fontWeight: 700 }}>
+                      🔥 Trending
+                    </div>
+                  </div>
+                  <div style={{ padding: '0.875rem' }}>
+                    <p style={{ fontWeight: 700, color: '#2F4156', fontSize: '0.88rem', margin: '0 0 0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{productName}</p>
+                    <p style={{ color: '#F283AF', fontSize: '0.75rem', fontWeight: 600, margin: '0 0 0.4rem' }}>{productMood}</p>
+                    <p style={{ fontWeight: 800, color: '#C43670', fontSize: '0.95rem' }}>LKR {productPrice?.toLocaleString() || '0'}</p>
                   </div>
                 </div>
-                <div style={{ padding: '0.875rem' }}>
-                  <p style={{ fontWeight: 700, color: '#2F4156', fontSize: '0.88rem', margin: '0 0 0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</p>
-                  <p style={{ color: '#F283AF', fontSize: '0.75rem', fontWeight: 600, margin: '0 0 0.4rem' }}>{item.mood}</p>
-                  <p style={{ fontWeight: 800, color: '#C43670', fontSize: '0.95rem' }}>LKR {item.retailPrice.toLocaleString()}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -37,7 +37,9 @@ export default function Dashboard() {
 
   const trackOrder = async (event) => {
     event.preventDefault();
-    const { data } = await api.get(`/orders/track/${track}`);
+    // Extract order number from full URL if needed
+    const orderNumber = track.includes('/') ? track.split('/').pop() : track;
+    const { data } = await api.get(`/orders/track/${orderNumber}`);
     setTracking(data);
   };
 

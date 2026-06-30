@@ -11,8 +11,9 @@ export const CartProvider = ({ children }) => {
       // Filter out invalid items and add default price if missing
       return parsed.filter(item => item && item.key).map(item => ({
         ...item,
-        price: item.price ?? (item.wholesale ? item.wholesalePrice : item.retailPrice) ?? 0,
-        retailPrice: item.retailPrice ?? 0,
+        price: item.price ?? (item.wholesale ? item.wholesalePrice : item.salePrice ?? item.retailPrice) ?? 0,
+        salePrice: item.salePrice ?? item.retailPrice ?? 0,
+        retailPrice: item.retailPrice ?? item.salePrice ?? 0,
         wholesalePrice: item.wholesalePrice ?? 0
       }));
     } catch {
@@ -35,7 +36,7 @@ export const CartProvider = ({ children }) => {
                 ...item,
                 quantity: item.quantity + quantity,
                 wholesale,
-                price: wholesale ? product.wholesalePrice : product.price
+                price: wholesale ? product.wholesalePrice : product.salePrice
               }
             : item
         );
@@ -51,8 +52,9 @@ export const CartProvider = ({ children }) => {
           sku: variant.sku,
           size: variant.size,
           color: variant.color,
-          price: wholesale ? product.wholesalePrice : product.price,
-          retailPrice: product.price,
+          price: wholesale ? product.wholesalePrice : product.salePrice,
+          salePrice: product.salePrice,
+          retailPrice: product.salePrice,
           wholesalePrice: product.wholesalePrice,
           quantity,
           wholesale
@@ -75,7 +77,7 @@ export const CartProvider = ({ children }) => {
         return {
           ...item,
           wholesale,
-          price: wholesale ? item.wholesalePrice : item.retailPrice
+          price: wholesale ? item.wholesalePrice : item.salePrice
         };
       })
     );

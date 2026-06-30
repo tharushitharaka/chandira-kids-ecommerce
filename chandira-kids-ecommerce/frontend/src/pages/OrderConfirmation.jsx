@@ -48,10 +48,25 @@ export default function OrderConfirmation() {
         {error && <p className="mt-4 text-body-sm text-red-600">{error}</p>}
         {!order && orderNumber && !error && <LoadingSpinner label="Loading order…" />}
 
+        {order && (
+          <div className="mt-8 rounded-2xl bg-brand-cream p-6 dark:bg-gray-800">
+            <h3 className="text-lg font-bold text-ink dark:text-white mb-4">Order Items</h3>
+            <div className="space-y-3">
+              {order.items.map((item, index) => (
+                <div key={index} className="flex justify-between text-sm">
+                  <span className="text-muted">{item.name} x {item.quantity}</span>
+                  <strong className="text-ink dark:text-white">LKR {(item.price * item.quantity).toLocaleString()}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 border-t border-brand-blush pt-4 flex justify-between font-bold">
+              <span className="text-ink dark:text-white">Total</span>
+              <span className="text-brand-rose">LKR {order.total.toLocaleString()}</span>
+            </div>
+          </div>
+        )}
+
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {orderNumber && (
-            <Link className="btn-secondary" to={`/orders/${orderNumber}`}>View order details</Link>
-          )}
           <Link className="btn-primary" to="/shop">Continue shopping</Link>
         </div>
       </div>

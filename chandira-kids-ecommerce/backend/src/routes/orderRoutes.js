@@ -37,7 +37,7 @@ router.post('/quote', async (req, res, next) => {
           product: product._id,
           name: product.name,
           quantity: Number(item.quantity),
-          price: wholesale ? product.wholesalePrice : product.price,
+          price: wholesale ? product.wholesalePrice : product.salePrice,
           wholesale
         };
       })
@@ -77,7 +77,7 @@ router.post('/', optionalAuth, async (req, res, next) => {
         color: variant.color,
         sku: variant.sku,
         quantity: Number(item.quantity),
-        price: item.wholesale ? product.wholesalePrice : product.price,
+        price: item.wholesale ? product.wholesalePrice : product.salePrice,
         wholesale: Boolean(item.wholesale)
       });
     }
@@ -108,14 +108,17 @@ router.post('/', optionalAuth, async (req, res, next) => {
       await coupon.save();
     }
 
-    await sendEmail({
+    // Send email asynchronously without blocking response
+    sendEmail({
       to: req.user?.email || guestEmail,
       subject: `Chandira Kids order ${order.orderNumber}`,
       html: orderConfirmationTemplate(order)
-    });
+    }).catch(err => console.error('Email error:', err));
 
     res.status(201).json({ order, paymentIntent });
   } catch (error) {
+    console.error('Order creation error:', error.message);
+    console.error('Error details:', error);
     next(error);
   }
 });
